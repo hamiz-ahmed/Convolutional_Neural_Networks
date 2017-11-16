@@ -51,7 +51,7 @@ def perform_operations():
 
         for i in range(5000):
             batch_xs, batch_ys = mnist.train.next_batch(100)
-            sess.run(train_step, feed_dict={xs: batch_xs, ys: batch_ys, learning_rate: 0.1, keep_prob: 0.5})
+            sess.run(train_step, feed_dict={xs: batch_xs, ys: batch_ys, learning_rate: rate, keep_prob: 0.5})
             if i % 50 == 0:
                 print("Step: ", i)
                 accuracy = compute_accuracy(sess, mnist.validation.images, mnist.validation.labels)
@@ -80,19 +80,19 @@ if __name__ == '__main__':
     x_image = tf.reshape(xs, [-1, 28, 28, 1])
     keep_prob = tf.placeholder(tf.float32)
 
-    # conv layer 1
+    # conv layer 1 #160
     W_conv1 = weight_variable([3, 3, 1, 16])  # patch 3x3, in size 1, out size 16
     b_conv1 = bias_variable([16])
     h_conv1 = tf.nn.relu(conv2d(x_image, W_conv1) + b_conv1)  # output size 28x28x16
     h_pool1 = max_pool_2x2(h_conv1)  # output size 14x14x16
 
-    # conv layer 2
+    # conv layer 2 320
     W_conv2 = weight_variable([3, 3, 16, 32])  # patch 3x3, in size 16, out size 32
     b_conv2 = bias_variable([32])
     h_conv2 = tf.nn.relu(conv2d(h_pool1, W_conv2) + b_conv2)  # output size 14x14x32
     h_pool2 = max_pool_2x2(h_conv2)  # output size 7x7x32
 
-    # fully connected layer
+    # fully connected layer 200832
     W_fc1 = weight_variable([7 * 7 * 32, 128])
     b_fc1 = bias_variable([128])
     h_pool2_flat = tf.reshape(h_pool2, [-1, 7 * 7 * 32])
@@ -108,3 +108,5 @@ if __name__ == '__main__':
     cross_entropy = tf.reduce_mean(-tf.reduce_sum(ys * tf.log(prediction),
                                                   reduction_indices=[1]))
     train_step = tf.train.GradientDescentOptimizer(learning_rate=learning_rate).minimize(cross_entropy)
+
+    perform_operations()
