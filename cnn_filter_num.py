@@ -1,3 +1,11 @@
+"""
+Copyright 2017, University of Freiburg.
+Muhammad Hamiz Ahmed <hamizahmed93@gmail.com>
+
+This is the code for third part of Deep Learning Lab Exercise 2
+"""
+
+
 from __future__ import print_function
 import tensorflow as tf
 from tensorflow.examples.tutorials.mnist import input_data
