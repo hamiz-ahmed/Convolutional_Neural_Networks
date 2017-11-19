@@ -49,14 +49,14 @@ def perform_sgd(sess):
         sess.run(train_step, feed_dict={xs: batch_xs, ys: batch_ys, keep_prob: 0.5})
         if i % 50 == 0:
             print("Step: ", i)
-            accuracy = compute_accuracy(sess, mnist.validation.images, mnist.validation.labels)
-            print("Validation accuracy: ", accuracy)
+            #accuracy = compute_accuracy(sess, mnist.validation.images, mnist.validation.labels)
+            #print("Validation accuracy: ", accuracy)
 
 
 def show_graph(x, y):
-    plt.plot(x, y)
+    plt.scatter(x, y, alpha = 0.8)
     plt.xlabel('parameters')
-    plt.ylabel('runtime')
+    plt.ylabel('runtime (minutes)')
     plt.show()
 
 
@@ -91,7 +91,7 @@ if __name__ == '__main__':
         b_conv2 = bias_variable([filter_size*2])
         h_conv2 = tf.nn.relu(conv2d(h_pool1, W_conv2) + b_conv2)  # output size 14x14x32
         h_pool2 = max_pool_2x2(h_conv2)  # output size 7x7x32
-        parameters_2 = parameters_1*2
+        parameters_2 = (3*3)*(filter_size)*(filter_size*2)
 
         # fully connected layer 200832
         W_fc1 = weight_variable([7 * 7 * (filter_size*2), 128])
@@ -126,7 +126,3 @@ if __name__ == '__main__':
         runtimes.append((time.time()-start_time)/60)
 
 show_graph(parameters, runtimes)
-
-
-
-
